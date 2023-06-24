@@ -1,7 +1,7 @@
 import '@/styles/globals.css'
 
 export const metadata = {
-  title: 'Breadit',
+  title: 'Breadit App',
   description: 'A Reddit clone built with Next.js and TypeScript.',
 }
 
