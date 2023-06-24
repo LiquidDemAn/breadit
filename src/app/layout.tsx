@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { cn } from "@/configs/utils";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/Toaster";
 
 export const metadata = {
   title: "Breadit App",
@@ -22,6 +23,8 @@ export default function RootLayout({
         <main className="container max-w-7xl mx-auto h-full pt-12">
           {children}
         </main>
+
+        <Toaster />
       </body>
     </html>
   );
