@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/configs/utils";
+import { cn } from "@/lib/utils";
 import { Props } from "@/components/AuthForm/types";
 import { useApi } from "@/components/AuthForm/useApi";
 import GoogleIcon from "@/components/ui/Icons/Google";

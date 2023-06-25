@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { cn } from "@/configs/utils";
+import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/Toaster";
@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("bg-white text-slate-900 ", inter.className)}>
       <body className="min-h-screen pt-12 bg-slate-50 ">
+        {/* @ts-expect-error Server Component */}
         <Navbar />
         <main className="container max-w-7xl mx-auto h-full pt-12">
           {children}

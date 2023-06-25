@@ -3,8 +3,12 @@ import Link from "next/link";
 import Logo from "@/components/ui/Icons/Logo";
 import { PathsEnum } from "@/configs/constants";
 import { buttonVariants } from "@/components/ui/Button";
+import { getAuthSession } from "@/configs/authOptions";
+import UserNavigation from "@/components/UserNavigation";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await getAuthSession();
+
   return (
     <header className="fixed top-0 inset-x-0 h-fit bg-zinc-100 border-b border-zinc-300 z-10 py-2">
       <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2">
@@ -15,9 +19,13 @@ const Navbar = () => {
           </h1>
         </Link>
 
-        <Link href={PathsEnum.SIGNIN} className={buttonVariants()}>
-          Sign in
-        </Link>
+        {session?.user ? (
+          <UserNavigation user={session.user} />
+        ) : (
+          <Link href={PathsEnum.SIGNIN} className={buttonVariants()}>
+            Sign in
+          </Link>
+        )}
       </div>
     </header>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { PathsEnum } from "@/configs/constants";
-import { cn } from "@/configs/utils";
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/Button";
 import SignIn from "@/components/SignIn";
 
