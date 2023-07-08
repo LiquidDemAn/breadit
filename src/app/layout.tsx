@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/Toaster";
+import { ReactNode } from "react";
 
 export const metadata = {
   title: "Breadit App",
@@ -13,14 +14,19 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
+  authModal,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  authModal: ReactNode;
 }) {
   return (
     <html lang="en" className={cn("bg-white text-slate-900 ", inter.className)}>
       <body className="min-h-screen pt-12 bg-slate-50 ">
         {/* @ts-expect-error Server Component */}
         <Navbar />
+
+        {authModal}
+
         <main className="container max-w-7xl mx-auto h-full pt-12">
           {children}
         </main>

@@ -2,8 +2,8 @@
 import React, { FC, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { Props } from "@/components/AuthForm/types";
-import { useApi } from "@/components/AuthForm/useApi";
+import { Props } from "@/components/Auth/AuthForm/types";
+import { useApi } from "@/components/Auth/AuthForm/useApi";
 import GoogleIcon from "@/components/ui/Icons/Google";
 
 const AuthForm: FC<Props> = ({ wrapperClasses }) => {
