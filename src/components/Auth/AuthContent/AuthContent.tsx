@@ -13,6 +13,7 @@ const AuthContent: FC<Props> = ({ authType }) => {
     <div className="container mx-auto flex flex-col justify-center space-y-6 w-full sm:w-[400px]">
       <div className="flex flex-col space-y-2 text-center">
         <Logo className="mx-auto h-6 w-6" />
+
         <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
         <p className="text-sm max-w-xs mx-auto">
           By continuing, you are setting up a Breadit account and agree to our
