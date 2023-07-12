@@ -5,3 +5,7 @@ export enum PathsEnum {
   CREATECOMMUNITY = "/r/create",
   SETTINGS = "/settings",
 }
+
+export enum ApiEndpoints {
+  SUBREDDIT = "/api/subreddit",
+}

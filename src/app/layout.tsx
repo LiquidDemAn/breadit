@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/Toaster";
 import { ReactNode } from "react";
+import Providers from "@/components/Providers";
 
 export const metadata = {
   title: "Breadit App",
@@ -20,18 +21,20 @@ export default function RootLayout({
   authModal: ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("bg-white text-slate-900 ", inter.className)}>
-      <body className="min-h-screen pt-12 bg-slate-50 ">
-        {/* @ts-expect-error Server Component */}
-        <Navbar />
+    <html lang="en" className={cn("bg-white text-slate-900", inter.className)}>
+      <body className="min-h-screen pt-12 bg-slate-50">
+        <Providers>
+          {/* @ts-expect-error Server Component */}
+          <Navbar />
 
-        {authModal}
+          {authModal}
 
-        <main className="container max-w-7xl mx-auto h-full pt-12">
-          {children}
-        </main>
+          <main className="container max-w-7xl mx-auto h-full pt-12">
+            {children}
+          </main>
 
-        <Toaster />
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

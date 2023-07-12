@@ -1,4 +1,10 @@
-import { getServerSession, NextAuthOptions } from "next-auth";
+import {
+  DefaultSession,
+  DefaultUser,
+  getServerSession,
+  NextAuthOptions,
+  Session,
+} from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "../lib/db";
 import { PathsEnum } from "@/configs/constants";
@@ -21,17 +27,14 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
-      if (token) {
+      if (token && session.user) {
         // @ts-ignore
         session.user.id = token.id;
         // @ts-ignore
-        session.user.name = token.name;
-        // @ts-ignore
-        session.user.email = token.email;
-        // @ts-ignore
-        session.user.image = token.picture;
-        // @ts-ignore
         session.user.username = token.username;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.image = token.picture;
       }
 
       return session;
@@ -69,4 +72,10 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export const getAuthSession = () => getServerSession(authOptions);
+export const getAuthSession = () =>
+  getServerSession(authOptions) as Promise<
+    | (Session & {
+        user: DefaultUser & { id: string; username?: string | null };
+      })
+    | null
+  >;

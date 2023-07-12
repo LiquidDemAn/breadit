@@ -2,12 +2,10 @@
 import React from "react";
 import { Button } from "@/components/ui/Button";
 import { X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouterMethods } from "@/hooks/useRouterMethods";
 
 const CloseModal = () => {
-  const router = useRouter();
-
-  const onBack = () => router.back();
+  const { onBack } = useRouterMethods();
 
   return (
     <Button
