@@ -1,6 +1,6 @@
 import { signIn } from "next-auth/react";
 import { UseApiProps } from "@/components/Auth/AuthForm/types";
-import { useCustomToast } from "@/configs/useCustomToast";
+import { useCustomToast } from "@/hooks/useCustomToast";
 
 export const useApi = ({ setIsLoading }: UseApiProps) => {
   const { signInErrorToast } = useCustomToast();

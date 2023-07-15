@@ -1,15 +1,10 @@
-import {
-  DefaultSession,
-  DefaultUser,
-  getServerSession,
-  NextAuthOptions,
-  Session,
-} from "next-auth";
+import { getServerSession, NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "../lib/db";
 import { PathsEnum } from "@/configs/constants";
 import GoogleProvider from "next-auth/providers/google";
 import { nanoid } from "nanoid";
+import { UserSessionType } from "@/types/common";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -73,9 +68,4 @@ export const authOptions: NextAuthOptions = {
 };
 
 export const getAuthSession = () =>
-  getServerSession(authOptions) as Promise<
-    | (Session & {
-        user: DefaultUser & { id: string; username?: string | null };
-      })
-    | null
-  >;
+  getServerSession(authOptions) as Promise<UserSessionType>;
