@@ -1,4 +1,4 @@
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/useToast";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/Button";
 import { PathsEnum } from "@/configs/constants";
@@ -55,11 +55,36 @@ export const useCustomToast = () => {
     });
   };
 
+  const defaultServerErrorToast = () => {
+    toast({
+      title: "There was a problem",
+      description: "Something went wrong, try again later...",
+      variant: "destructive",
+    });
+  };
+
+  const subredditSubscribeToast = (subredditName: string) => {
+    toast({
+      title: "Subscribed",
+      description: `You are now subscribed to r/${subredditName}`,
+    });
+  };
+
+  const subredditUnsubscribeToast = (subredditName: string) => {
+    toast({
+      title: "Unsubscribed",
+      description: `You are now unsubscribed from r/${subredditName}`,
+    });
+  };
+
   return {
-    signInErrorToast,
-    subredditAlreadyExistsToast,
-    invalidSubredditNameToast,
     loginToast,
+    signInErrorToast,
+    subredditSubscribeToast,
+    defaultServerErrorToast,
+    subredditUnsubscribeToast,
+    invalidSubredditNameToast,
     unknownSubredditErrorToast,
+    subredditAlreadyExistsToast,
   };
 };
