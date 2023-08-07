@@ -20,8 +20,6 @@ export const useApi = () => {
     },
     onSuccess: () => {
       const newPathname = pathname.split("/").slice(0, -1).join("/");
-      console.log(newPathname);
-      console.log(pathname);
       router.push(newPathname);
       router.refresh();
       successCretePostToast();
