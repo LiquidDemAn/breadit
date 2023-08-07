@@ -1,5 +1,12 @@
 "use client";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useForm } from "react-hook-form";
 import {
@@ -12,10 +19,15 @@ import { EditorConfig } from "@editorjs/editorjs";
 import type EditorJS from "@editorjs/editorjs";
 import { ApiEndpoints } from "@/configs/constants";
 import { uploadFiles } from "@/lib/uploadthing";
+import { useCustomToast } from "@/hooks/useCustomToast";
+import { useApi } from "@/components/Editor/useApi";
 
 const Editor: FC<Props> = ({ subredditId }) => {
   const ref = useRef<EditorJS>();
+  const titleRef = useRef<HTMLTextAreaElement>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const { postValidationToast } = useCustomToast();
+  const createPostHandel = useApi();
 
   const {
     register,
@@ -29,6 +41,8 @@ const Editor: FC<Props> = ({ subredditId }) => {
       content: null,
     },
   });
+
+  const { ref: titleRefCallBack, ...rest } = register("title");
 
   const initializeEditor = useCallback(async () => {
     const EditorJs = (await import("@editorjs/editorjs")).default;
@@ -87,7 +101,10 @@ const Editor: FC<Props> = ({ subredditId }) => {
     }
   }, []);
 
-  const onSubmit = () => {};
+  const onSubmit = async ({ title }: PostCreationRequest) => {
+    const blocks = await ref.current?.save();
+    createPostHandel({ title, subredditId, content: blocks });
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -96,26 +113,48 @@ const Editor: FC<Props> = ({ subredditId }) => {
   }, []);
 
   useEffect(() => {
+    const errorsList = Object.entries(errors);
+    if (errorsList.length) {
+      for (const [_key, value] of errorsList) {
+        postValidationToast(value.message as string);
+      }
+    }
+  }, [errors]);
+
+  useEffect(() => {
     const init = async () => {
       await initializeEditor();
     };
 
     setTimeout(() => {
-      //   set focus to title
-    });
+      titleRef.current?.focus();
+    }, 0);
 
     if (isMounted) {
       init();
 
-      return () => {};
+      return () => {
+        ref.current?.destroy();
+        ref.current = undefined;
+      };
     }
   }, [isMounted, initializeEditor]);
 
   return (
     <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200">
-      <form id="subreddit-post-form" className="w-fit" onSubmit={onSubmit}>
+      <form
+        id="subreddit-post-form"
+        className="w-fit"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="prose prose-stone dark:prose-invert">
           <TextareaAutosize
+            ref={(event) => {
+              titleRefCallBack(event);
+              // @ts-ignore
+              titleRef.current = event;
+            }}
+            {...rest}
             placeholder="Title"
             className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
           />

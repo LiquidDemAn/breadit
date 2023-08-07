@@ -1,4 +1,4 @@
-import { useToast } from "@/hooks/useToast";
+import { toast, useToast } from "@/hooks/useToast";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/Button";
 import { PathsEnum } from "@/configs/constants";
@@ -77,6 +77,28 @@ export const useCustomToast = () => {
     });
   };
 
+  const postValidationToast = (description: string) => {
+    toast({
+      title: "Something went wrong!",
+      description,
+      variant: "destructive",
+    });
+  };
+
+  const creatPostErrorToast = () => {
+    toast({
+      title: "Something went wrong!",
+      description: "Your post was not published, please try again later",
+      variant: "destructive",
+    });
+  };
+
+  const successCretePostToast = () => {
+    toast({
+      description: "Your post has been published!",
+    });
+  };
+
   return {
     loginToast,
     signInErrorToast,
@@ -86,5 +108,8 @@ export const useCustomToast = () => {
     invalidSubredditNameToast,
     unknownSubredditErrorToast,
     subredditAlreadyExistsToast,
+    postValidationToast,
+    creatPostErrorToast,
+    successCretePostToast,
   };
 };
