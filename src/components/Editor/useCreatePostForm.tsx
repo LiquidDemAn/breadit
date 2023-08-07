@@ -13,7 +13,7 @@ export const useCreatePostForm = ({
   subredditId,
   editorRef,
 }: CreatPostFormProps) => {
-  const createPostHandel = useApi();
+  const { createPostHandel, creatPostLoading } = useApi();
   const { postValidationToast } = useCustomToast();
 
   const {
@@ -46,5 +46,6 @@ export const useCreatePostForm = ({
   return {
     register,
     onSubmit: handleSubmit(onSubmit),
+    creatPostLoading,
   };
 };

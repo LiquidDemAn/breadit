@@ -10,7 +10,7 @@ export const useApi = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: async (payload: PostCreationRequest) => {
       const { data } = await axios.post(ApiEndpoints.CREATE_POST, payload);
       return data;
@@ -26,5 +26,5 @@ export const useApi = () => {
     },
   });
 
-  return mutate;
+  return { createPostHandel: mutate, creatPostLoading: isLoading };
 };
