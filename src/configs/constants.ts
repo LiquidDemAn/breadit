@@ -7,6 +7,7 @@ export enum PathsEnum {
   SIGNIN = "/sign-in",
   SIGNUP = "/sign-up",
   CREATECOMMUNITY = "/r/create",
+  SUBREDDIT = "/r/",
   SETTINGS = "/settings",
 }
 
