@@ -1,5 +1,7 @@
+/* eslint-disable */
+
 export enum QueryKeys {
-  INFINITY_QUERY = 'INFINITY_QUERY'
+  INFINITY_QUERY = "INFINITY_QUERY",
 }
 
 export enum PathsEnum {
@@ -7,7 +9,7 @@ export enum PathsEnum {
   SIGNIN = "/sign-in",
   SIGNUP = "/sign-up",
   CREATECOMMUNITY = "/r/create",
-  SUBREDDIT = "/r/",
+  SUBREDDIT = "/r",
   SETTINGS = "/settings",
 }
 

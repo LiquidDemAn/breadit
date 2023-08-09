@@ -1,12 +1,16 @@
 import { FC, useRef } from "react";
 import { Props } from "@/components/Post/types";
-import { PathsEnum } from "@/configs/constants";
 import { formatTimeToNow } from "@/lib/utils";
 import { MessageSquare } from "lucide-react";
 import EditorOutput from "@/components/EditorOutput/EditorOutput";
+import { getPostLink } from "@/utils/getPostLink";
+import { getSubredditLink } from "@/utils/getSubredditLink";
+import Link from "next/link";
 
 const Post: FC<Props> = ({ subredditName, post }) => {
   const pRef = useRef<HTMLDivElement>(null);
+  const subredditLink = getSubredditLink(subredditName);
+  const postLink = getPostLink(subredditName, post.id);
   const commentsAmount = post.comments.length;
 
   return (
@@ -20,7 +24,7 @@ const Post: FC<Props> = ({ subredditName, post }) => {
               <>
                 <a
                   className="underline text-zinc-900 text-sm underline-offset-2"
-                  href={PathsEnum.SUBREDDIT + subredditName}
+                  href={subredditLink}
                 >
                   r/{subredditName}
                 </a>
@@ -32,11 +36,11 @@ const Post: FC<Props> = ({ subredditName, post }) => {
               {formatTimeToNow(new Date(post.createdAt))}
             </span>
           </div>
-          <a href={`/r/${subredditName}/post/${post.id}`}>
+          <Link href={postLink}>
             <h1 className="text-lg font-semibold py-2 leading-6 text-gray-900">
               {post.title}
             </h1>
-          </a>
+          </Link>
 
           <div
             ref={pRef}
@@ -50,12 +54,9 @@ const Post: FC<Props> = ({ subredditName, post }) => {
         </div>
       </div>
       <div className="bg-gray-50 z-20 text-sm p-4 sm:px-6">
-        <a
-          href={`/r/${subredditName}/post/${post.id}`}
-          className="w-fit flex items-center gap-2"
-        >
+        <Link href={postLink} className="w-fit flex items-center gap-2">
           <MessageSquare className="h-4 w-4" /> {commentsAmount} comments
-        </a>
+        </Link>
       </div>
     </div>
   );
