@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 8080",
+    "start": "next start -p 8080",
     "build": "next build",
-    "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "push": "prisma db push"
+    "push": "prisma db push",
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@editorjs/code": "^2.8.0",

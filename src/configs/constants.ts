@@ -1,3 +1,7 @@
+export enum QueryKeys {
+  INFINITY_QUERY = 'INFINITY_QUERY'
+}
+
 export enum PathsEnum {
   HOME = "/",
   SIGNIN = "/sign-in",

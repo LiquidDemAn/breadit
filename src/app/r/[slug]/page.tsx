@@ -5,17 +5,25 @@ import { notFound } from "next/navigation";
 import CreatePost from "@/components/CreatePost";
 import { PageProps } from "@/app/r/[slug]/types";
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/configs/constants";
+import PostFeed from "@/components/PostFeed";
 
 const Page = async ({ params: { slug } }: PageProps) => {
   const session = await getAuthSession();
   const subreddit = await getSubredditByName({
+    postsComments: true,
+    postsAuthor: true,
+    postsVotes: true,
+    postsSubreddit: true,
     name: slug,
     take: INFINITE_SCROLLING_PAGINATION_RESULTS,
   });
 
-  if (!subreddit) {
+    console.log(subreddit);
+
+    if (!subreddit) {
     return notFound();
   }
+
 
   return (
     <>
@@ -23,7 +31,7 @@ const Page = async ({ params: { slug } }: PageProps) => {
         r/{subreddit.name}
       </h1>
       <CreatePost session={session} />
-      {/*  TODO: Show posts in user feed  */}
+        <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
     </>
   );
 };

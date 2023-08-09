@@ -5,6 +5,7 @@ import { Props } from "./types";
 import { useInitializeEditor } from "@/components/Editor/useInitializeEditor";
 import { useCreatePostForm } from "@/components/Editor/useCreatePostForm";
 import { Button } from "@/components/ui/Button";
+import {useSession} from "next-auth/react";
 
 const Editor: FC<Props> = ({ subredditId }) => {
   const titleRef = useRef<HTMLTextAreaElement>(null);
@@ -15,10 +16,14 @@ const Editor: FC<Props> = ({ subredditId }) => {
     editorRef,
   });
 
+  const {data: session} = useSession()
+
+  console.log(session);
+
   const { ref: titleRefCallBack, ...rest } = register("title");
 
   return (
-    <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200">
+    <div className="w-full p-8 bg-zinc-50 rounded-lg border border-zinc-200">
       <form id="subreddit-post-form" onSubmit={onSubmit}>
         <div className="prose prose-stone dark:prose-invert">
           <TextareaAutosize
