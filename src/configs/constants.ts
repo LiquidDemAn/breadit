@@ -19,6 +19,7 @@ export enum ApiEndpoints {
   UNSUBSCRIBE = "/api/subreddit/unsubscribe",
   LINK = "/api/link",
   CREATE_POST = "/api/subreddit/post/create",
+  VOTE = "/api/subreddit/post/vote",
 }
 
 export const INFINITE_SCROLLING_PAGINATION_RESULTS = 2;

@@ -6,17 +6,33 @@ import EditorOutput from "@/components/EditorOutput/EditorOutput";
 import { getPostLink } from "@/utils/getPostLink";
 import { getSubredditLink } from "@/utils/getSubredditLink";
 import Link from "next/link";
+import PostVoteClient from "@/components/PostVotesClient";
+import { UserSessionType } from "@/types/common";
+import { useSession } from "next-auth/react";
+import { getVotesAmount } from "@/utils/getVotesAmount";
 
 const Post: FC<Props> = ({ subredditName, post }) => {
+  const { data } = useSession();
+  const session = data as UserSessionType;
   const pRef = useRef<HTMLDivElement>(null);
+
+  const votesAmount = getVotesAmount(post);
   const subredditLink = getSubredditLink(subredditName);
   const postLink = getPostLink(subredditName, post.id);
+
   const commentsAmount = post.comments.length;
+  const currentVote = post.votes.find(
+    (vote) => vote.userId === session?.user.id,
+  );
 
   return (
     <div className="rounded-md bg-white shadow">
       <div className="px-6 py-4 flex justify-between">
-        {/*  TODO Votes  */}
+        <PostVoteClient
+          postId={post.id}
+          initialVote={currentVote}
+          initialVotesAmount={votesAmount}
+        />
 
         <div className="w-0 flex-1">
           <div className="max-h-40 mt-1 text-xs text-gray-500">

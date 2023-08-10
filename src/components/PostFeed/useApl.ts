@@ -3,8 +3,9 @@ import {
   INFINITE_SCROLLING_PAGINATION_RESULTS,
   QueryKeys,
 } from "@/configs/constants";
-import { ExtendedPost, useApiProps } from "@/components/PostFeed/types";
+import { useApiProps } from "@/components/PostFeed/types";
 import axios from "axios";
+import { ExtendedPost } from "@/types/post";
 
 export const useApi = ({ subredditName, initialPosts }: useApiProps) => {
   const {

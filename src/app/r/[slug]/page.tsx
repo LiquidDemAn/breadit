@@ -18,12 +18,9 @@ const Page = async ({ params: { slug } }: PageProps) => {
     take: INFINITE_SCROLLING_PAGINATION_RESULTS,
   });
 
-    console.log(subreddit);
-
-    if (!subreddit) {
+  if (!subreddit) {
     return notFound();
   }
-
 
   return (
     <>
@@ -31,7 +28,7 @@ const Page = async ({ params: { slug } }: PageProps) => {
         r/{subreddit.name}
       </h1>
       <CreatePost session={session} />
-        <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
+      <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
     </>
   );
 };

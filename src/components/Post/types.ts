@@ -1,10 +1,6 @@
-import { Comment, Post, User, Vote } from "@prisma/client";
+import { ExtendedPost } from "@/types/post";
 
 export type Props = {
   subredditName?: string;
-  post: Post & {
-    author: User;
-    votes: Vote[];
-    comments: Comment[];
-  };
+  post: ExtendedPost;
 };
