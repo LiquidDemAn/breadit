@@ -17,7 +17,7 @@ export const useApi = ({
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    [QueryKeys.INFINITY_QUERY],
+    [subredditName ? subredditName : "", QueryKeys.INFINITY_QUERY],
     async ({ pageParam = 1 }) => {
       const query =
         `/api/posts?limit=${INFINITE_SCROLLING_PAGINATION_RESULTS}&page=${pageParam}` +

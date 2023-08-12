@@ -3,24 +3,11 @@ import { getAuthSession } from "@/configs/authOptions";
 import { db } from "@/lib/db";
 import { z } from "zod";
 
-// eslint-disable-next-line no-unused-vars
 const enum SearchParams {
   PAGE = "page",
   LIMIT = "limit",
   SUBREDDIT_NAME = "subredditName",
 }
-
-type WhereClause = {
-  subreddit?:
-    | {
-        name: string;
-      }
-    | {
-        id: {
-          in: string[];
-        };
-      };
-};
 
 export const GET = async (req: NextRequest) => {
   const url = new URL(req.url);
@@ -58,14 +45,6 @@ export const GET = async (req: NextRequest) => {
         ),
       });
 
-    const whereClause: WhereClause = {};
-
-    if (subredditName) {
-      whereClause.subreddit = { name: subredditName };
-    } else if (session) {
-      whereClause.subreddit = { id: { in: followedCommunitiesIds } };
-    }
-
     const take = parseInt(limit);
     const skip = (parseInt(page) - 1) * take;
 
@@ -81,7 +60,16 @@ export const GET = async (req: NextRequest) => {
         author: true,
         comments: true,
       },
-      where: whereClause,
+      where: {
+        subreddit: {
+          ...(session && {
+            id: {
+              in: followedCommunitiesIds,
+            },
+          }),
+          ...(subredditName && { name: subredditName }),
+        },
+      },
     });
 
     return new Response(JSON.stringify(posts));
