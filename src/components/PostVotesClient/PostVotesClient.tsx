@@ -14,7 +14,11 @@ const PostVoteClient: FC<Props> = ({
 }) => {
   const [currentVote, setCurrentVote] = useState(initialVote);
   const [votesAmount, setVotesAmount] = useState(initialVotesAmount);
-  const { mutate } = useApi({ currentVote, setVotesAmount, setCurrentVote });
+  const { mutate, isLoading } = useApi({
+    currentVote,
+    setVotesAmount,
+    setCurrentVote,
+  });
 
   const voteUpHandle = () => {
     mutate({ postId, type: VoteType.UP });
@@ -35,6 +39,7 @@ const PostVoteClient: FC<Props> = ({
         size="sm"
         variant="ghost"
         aria-label="upvote"
+        disabled={isLoading}
       >
         <ArrowBigUp
           className={cn("h-5 w-5 text-zinc-700", {
@@ -53,6 +58,7 @@ const PostVoteClient: FC<Props> = ({
         size="sm"
         variant="ghost"
         aria-label="downvote"
+        disabled={isLoading}
       >
         <ArrowBigDown
           className={cn("h-5 w-5 text-zinc-700", {

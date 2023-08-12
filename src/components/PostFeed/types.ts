@@ -1,8 +1,8 @@
 import { ExtendedPost } from "@/types/post";
 
 export type Props = {
-  initialPosts: ExtendedPost[];
   subredditName?: string;
+  initialPosts: ExtendedPost[];
 };
 
 export type useApiProps = Props;

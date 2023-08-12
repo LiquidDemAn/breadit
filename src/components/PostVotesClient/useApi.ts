@@ -18,7 +18,7 @@ export const useApi = ({
   const { loginToast } = useCustomToast();
   const session = useUserSession();
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: async (payload: PostVoteRequest) => {
       await axios.patch(ApiEndpoints.VOTE, payload);
     },
@@ -30,14 +30,17 @@ export const useApi = ({
 
         if (type === VoteType.UP) {
           setVotesAmount((prev) => prev - 1);
-        } else if (type === VoteType.DOWN) {
+        }
+        if (type === VoteType.DOWN) {
           setVotesAmount((prev) => prev + 1);
         }
       } else {
         setCurrentVote({ ...vote, userId: session?.user?.id! });
+
         if (type === VoteType.UP) {
           setVotesAmount((prev) => prev + (currentVote ? 2 : 1));
-        } else if (type === VoteType.DOWN) {
+        }
+        if (type === VoteType.DOWN) {
           setVotesAmount((prev) => prev - (currentVote ? 2 : 1));
         }
       }
@@ -65,5 +68,5 @@ export const useApi = ({
     },
   });
 
-  return { mutate };
+  return { mutate, isLoading };
 };

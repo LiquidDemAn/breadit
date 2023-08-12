@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FC, useRef } from "react";
 import { Props } from "@/components/Post/types";
 import { formatTimeToNow } from "@/lib/utils";
@@ -5,7 +6,6 @@ import { MessageSquare } from "lucide-react";
 import EditorOutput from "@/components/EditorOutput/EditorOutput";
 import { getPostLink } from "@/utils/getPostLink";
 import { getSubredditLink } from "@/utils/getSubredditLink";
-import Link from "next/link";
 import PostVoteClient from "@/components/PostVotesClient";
 import { getVotesAmount } from "@/utils/getVotesAmount";
 import { useUserSession } from "@/utils/useUserSession";
@@ -15,8 +15,8 @@ const Post: FC<Props> = ({ subredditName, post }) => {
   const pRef = useRef<HTMLDivElement>(null);
 
   const votesAmount = getVotesAmount(post);
-  const subredditLink = getSubredditLink(subredditName);
   const postLink = getPostLink(subredditName, post.id);
+  const subredditLink = getSubredditLink(subredditName);
 
   const commentsAmount = post.comments.length;
   const currentVote = post.votes.find(
