@@ -41,7 +41,6 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.log(error);
       return new Response("Invalid request data passed", { status: 422 });
     }
 

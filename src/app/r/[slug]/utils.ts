@@ -19,7 +19,9 @@ export const getSubredditByName = async ({
           comments: postsComments,
           subreddit: postsSubreddit,
         },
-
+        orderBy: {
+          createdAt: "desc",
+        },
         take,
       },
     },

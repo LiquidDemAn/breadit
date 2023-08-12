@@ -1,10 +1,10 @@
 import { getServerSession, NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { db } from "../lib/db";
+import { db } from "@/lib/db";
 import { PathsEnum } from "@/configs/constants";
 import GoogleProvider from "next-auth/providers/google";
 import { nanoid } from "nanoid";
-import { UserSessionType } from "@/types/common";
+import { UserSessionType } from "@/utils/useUserSession";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),

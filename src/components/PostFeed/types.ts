@@ -5,4 +5,6 @@ export type Props = {
   initialPosts: ExtendedPost[];
 };
 
-export type useApiProps = Props;
+export type useApiProps = Props & {
+  setIsLastPosts: (isLastPosts: boolean) => void;
+};

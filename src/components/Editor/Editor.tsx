@@ -5,7 +5,6 @@ import { Props } from "./types";
 import { useInitializeEditor } from "@/components/Editor/useInitializeEditor";
 import { useCreatePostForm } from "@/components/Editor/useCreatePostForm";
 import { Button } from "@/components/ui/Button";
-import {useSession} from "next-auth/react";
 
 const Editor: FC<Props> = ({ subredditId }) => {
   const titleRef = useRef<HTMLTextAreaElement>(null);
@@ -15,10 +14,6 @@ const Editor: FC<Props> = ({ subredditId }) => {
     subredditId,
     editorRef,
   });
-
-  const {data: session} = useSession()
-
-  console.log(session);
 
   const { ref: titleRefCallBack, ...rest } = register("title");
 

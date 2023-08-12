@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/configs/authOptions";
-import { SubredditSubscriptionValidator } from "@/lib/validators/subreddit";
 import { db } from "@/lib/db";
 import { z } from "zod";
 import { PostValidator } from "@/components/Editor/postValidator";
@@ -44,7 +43,6 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.log(error);
       return new Response("Invalid request data passed", { status: 422 });
     }
 

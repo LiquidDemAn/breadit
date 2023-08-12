@@ -7,7 +7,11 @@ import { useApiProps } from "@/components/PostFeed/types";
 import axios from "axios";
 import { ExtendedPost } from "@/types/post";
 
-export const useApi = ({ subredditName, initialPosts }: useApiProps) => {
+export const useApi = ({
+  subredditName,
+  initialPosts,
+  setIsLastPosts,
+}: useApiProps) => {
   const {
     data: infiniteData,
     fetchNextPage,
@@ -19,6 +23,7 @@ export const useApi = ({ subredditName, initialPosts }: useApiProps) => {
         `/api/posts?limit=${INFINITE_SCROLLING_PAGINATION_RESULTS}&page=${pageParam}` +
         (!!subredditName ? `&subredditName=${subredditName}` : "");
       const { data } = await axios<ExtendedPost[]>(query);
+      setIsLastPosts(!data.length);
       return data;
     },
     {
