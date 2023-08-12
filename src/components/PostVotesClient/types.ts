@@ -1,16 +1,14 @@
-import { VoteType } from "@prisma/client";
+import { Vote } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 
 export type Props = {
   postId: string;
   initialVotesAmount: number;
-  initialVote?: { postId: string; voteType: VoteType } | null;
+  initialVote?: Vote;
 };
 
 export type useApiProps = {
-  currentVote?: { postId: string; voteType: VoteType } | null;
-  setCurrentVote: Dispatch<
-    SetStateAction<{ postId: string; voteType: VoteType } | null | undefined>
-  >;
+  currentVote?: Vote;
+  setCurrentVote: Dispatch<SetStateAction<Vote | undefined>>;
   setVotesAmount: Dispatch<SetStateAction<number>>;
 };

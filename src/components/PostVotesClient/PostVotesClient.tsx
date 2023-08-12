@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Props } from "@/components/PostVotesClient/types";
 import { Button } from "@/components/ui/Button";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
@@ -17,12 +17,16 @@ const PostVoteClient: FC<Props> = ({
   const { mutate } = useApi({ currentVote, setVotesAmount, setCurrentVote });
 
   const voteUpHandle = () => {
-    mutate({ postId, voteType: VoteType.UP });
+    mutate({ postId, type: VoteType.UP });
   };
 
   const voteDownHandle = () => {
-    mutate({ postId, voteType: VoteType.DOWN });
+    mutate({ postId, type: VoteType.DOWN });
   };
+
+  useEffect(() => {
+    setCurrentVote(initialVote);
+  }, [initialVote]);
 
   return (
     <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
@@ -35,7 +39,7 @@ const PostVoteClient: FC<Props> = ({
         <ArrowBigUp
           className={cn("h-5 w-5 text-zinc-700", {
             "text-emerald-500 fill-emerald-500":
-              currentVote?.voteType === VoteType.UP,
+              currentVote?.type === VoteType.UP,
           })}
         />
       </Button>
@@ -52,8 +56,7 @@ const PostVoteClient: FC<Props> = ({
       >
         <ArrowBigDown
           className={cn("h-5 w-5 text-zinc-700", {
-            "text-red-500 fill-red-500":
-              currentVote?.voteType === VoteType.DOWN,
+            "text-red-500 fill-red-500": currentVote?.type === VoteType.DOWN,
           })}
         />
       </Button>

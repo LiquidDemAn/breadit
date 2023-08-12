@@ -7,13 +7,11 @@ import { getPostLink } from "@/utils/getPostLink";
 import { getSubredditLink } from "@/utils/getSubredditLink";
 import Link from "next/link";
 import PostVoteClient from "@/components/PostVotesClient";
-import { UserSessionType } from "@/types/common";
-import { useSession } from "next-auth/react";
 import { getVotesAmount } from "@/utils/getVotesAmount";
+import { useUserSession } from "@/utils/useUserSession";
 
 const Post: FC<Props> = ({ subredditName, post }) => {
-  const { data } = useSession();
-  const session = data as UserSessionType;
+  const session = useUserSession();
   const pRef = useRef<HTMLDivElement>(null);
 
   const votesAmount = getVotesAmount(post);

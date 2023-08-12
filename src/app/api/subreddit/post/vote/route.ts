@@ -12,7 +12,7 @@ const CACHE_AFTER_UP_VOTES = 1;
 export const PATCH = async (req: NextRequest) => {
   try {
     const body = await req.json();
-    const { voteType, postId } = PostVoteValidator.parse(body);
+    const { type, postId } = PostVoteValidator.parse(body);
     const session = await getAuthSession();
 
     if (!session?.user) {
@@ -38,7 +38,7 @@ export const PATCH = async (req: NextRequest) => {
     }
 
     if (existingVote) {
-      if (existingVote.type === voteType) {
+      if (existingVote.type === type) {
         await db.vote.delete({
           where: { userId_postId: { postId, userId } },
         });
@@ -51,7 +51,7 @@ export const PATCH = async (req: NextRequest) => {
             content: JSON.stringify(post.content),
             id: post.id,
             title: post.title,
-            currentVote: voteType,
+            currentVote: type,
             createdAt: post.createdAt,
           };
 
@@ -64,7 +64,7 @@ export const PATCH = async (req: NextRequest) => {
         where: {
           userId_postId: { postId, userId },
         },
-        data: { type: voteType },
+        data: { type },
       });
 
       const votesAmount = getVotesAmount(post);
@@ -75,7 +75,7 @@ export const PATCH = async (req: NextRequest) => {
           content: JSON.stringify(post.content),
           id: post.id,
           title: post.title,
-          currentVote: voteType,
+          currentVote: type,
           createdAt: post.createdAt,
         };
 
@@ -90,7 +90,7 @@ export const PATCH = async (req: NextRequest) => {
         data: {
           postId,
           userId,
-          type: voteType,
+          type,
         },
       });
     }
@@ -103,7 +103,7 @@ export const PATCH = async (req: NextRequest) => {
         content: JSON.stringify(post.content),
         id: post.id,
         title: post.title,
-        currentVote: voteType,
+        currentVote: type,
         createdAt: post.createdAt,
       };
 
