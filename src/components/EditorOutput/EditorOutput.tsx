@@ -1,3 +1,4 @@
+"use client";
 import React, { FC } from "react";
 import dynamic from "next/dynamic";
 import { Props } from "./types";
