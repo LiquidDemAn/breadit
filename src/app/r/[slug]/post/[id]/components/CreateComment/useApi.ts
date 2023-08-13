@@ -9,7 +9,7 @@ export const useApi = (setValue: (text: string) => void) => {
   const { loginToast } = useCustomToast();
   const router = useRouter();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: async (payload: CreateCommentRequest) => {
       const { data } = await axios.post(ApiEndpoints.CREATE_COMMENT, payload);
       setValue("");
@@ -28,5 +28,6 @@ export const useApi = (setValue: (text: string) => void) => {
   return {
     createCommentHandle: mutate,
     isCreateCommentLoading: isLoading,
+    isCreateCommentSuccess: isSuccess,
   };
 };

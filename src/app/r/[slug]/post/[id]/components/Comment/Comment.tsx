@@ -1,15 +1,40 @@
 "use client";
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import UserAvatar from "@/components/UserAvatar";
 import { Props } from "@/app/r/[slug]/post/[id]/components/Comment/types";
 import { formatTimeToNow } from "@/lib/utils";
 import CommentVotes from "@/app/r/[slug]/post/[id]/components/CommentVotes";
+import { Button } from "@/components/ui/Button";
+import { MessageSquare } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { PathsEnum } from "@/configs/constants";
+import { useUserSession } from "@/utils/useUserSession";
+import CreateComment from "@/app/r/[slug]/post/[id]/components/CreateComment";
+import { getVotesAmount } from "@/utils/getVotesAmount";
+import { getCurrentVote } from "@/utils/getCurrentVote";
 
 const Comment: FC<Props> = ({ comment }) => {
+  const router = useRouter();
+  const session = useUserSession();
   const commentRef = useRef<HTMLDivElement>(null);
+  const [isReplaying, setIsReplaying] = useState(false);
 
-  const { votesAmount, id, currentVote, author, createdAt, text } = comment;
+  const votesAmount = getVotesAmount(comment.votes);
+  const currentVote = getCurrentVote(comment.votes, session);
+
+  const { id, author, createdAt, text, postId } = comment;
   const { name, image, username } = author;
+
+  const onReplyOpen = () => {
+    if (!session) {
+      router.push(PathsEnum.SIGNIN);
+    }
+    setIsReplaying(!isReplaying);
+  };
+
+  const onReplyCancel = () => {
+    setIsReplaying(false);
+  };
 
   return (
     <div ref={commentRef} className="flex flex-col">
@@ -27,10 +52,28 @@ const Comment: FC<Props> = ({ comment }) => {
       <div className="flex gap-2 items-center">
         <CommentVotes
           commentId={id}
-          initialVotesAmount={votesAmount}
+          initialVotesAmount={votesAmount || 0}
           initialVote={currentVote}
         />
+
+        {!comment.replyToId && (
+          <Button onClick={onReplyOpen} variant="ghost" size="xs">
+            <MessageSquare className="h-4 w-4 mr-1.5" />
+            Reply
+          </Button>
+        )}
       </div>
+
+      {isReplaying && (
+        <div className="mt-4">
+          <CreateComment
+            replyToId={id}
+            postId={postId}
+            onCancel={onReplyCancel}
+            setIsReplaying={setIsReplaying}
+          />
+        </div>
+      )}
     </div>
   );
 };

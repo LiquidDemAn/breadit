@@ -18,6 +18,19 @@ const Comments = async ({ postId }: Props) => {
           <div key={comment.id} className="flex flex-col">
             <div className="mb-2">
               <Comment comment={comment} />
+
+              {comment.replies && (
+                <div className="ml-2">
+                  {comment.replies.map((reply) => (
+                    <div
+                      className="py-2 my-1 pl-4 border-l-2 border-zinc-200"
+                      key={reply.id}
+                    >
+                      <Comment comment={reply} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         ))}

@@ -1,4 +1,6 @@
 export type Props = {
-  postId: string;
+  postId: string | null;
   replyToId?: string;
+  onCancel?: () => void;
+  setIsReplaying?: (value: boolean) => void;
 };

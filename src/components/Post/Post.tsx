@@ -9,6 +9,7 @@ import { getSubredditLink } from "@/utils/getSubredditLink";
 import PostVoteClient from "@/components/PostVotesClient";
 import { getVotesAmount } from "@/utils/getVotesAmount";
 import { useUserSession } from "@/utils/useUserSession";
+import { getCurrentVote } from "@/utils/getCurrentVote";
 
 const Post: FC<Props> = ({ subredditName, post }) => {
   const session = useUserSession();
@@ -19,9 +20,7 @@ const Post: FC<Props> = ({ subredditName, post }) => {
   const subredditLink = getSubredditLink(subredditName);
 
   const commentsAmount = post.comments.length;
-  const currentVote = post.votes.find(
-    (vote) => vote.userId === session?.user.id,
-  );
+  const currentVote = getCurrentVote(post.votes, session);
 
   return (
     <div className="rounded-md bg-white shadow">

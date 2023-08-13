@@ -1,10 +1,6 @@
-import { getAuthSession } from "@/configs/authOptions";
 import { db } from "@/lib/db";
-import { getVotesAmount } from "@/utils/getVotesAmount";
 
 export const getCommentsData = async (postId: string) => {
-  const session = await getAuthSession();
-
   const comments = await db.comment.findMany({
     where: {
       postId,
@@ -18,6 +14,9 @@ export const getCommentsData = async (postId: string) => {
           votes: true,
           author: true,
         },
+        orderBy: {
+          votes: { _count: "desc" },
+        },
       },
     },
     orderBy: {
@@ -25,16 +24,7 @@ export const getCommentsData = async (postId: string) => {
     },
   });
 
-  const topLevelComments = comments
-    .filter(({ replyToId }) => !replyToId)
-    .map((comment) => {
-      const votesAmount = getVotesAmount(comment.votes);
-      const currentVote = comment.votes.find(
-        (vote) => vote.userId === session?.user.id,
-      );
-
-      return { ...comment, votesAmount, currentVote };
-    });
+  const topLevelComments = comments.filter(({ replyToId }) => !replyToId);
 
   return { topLevelComments };
 };
