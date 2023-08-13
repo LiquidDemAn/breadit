@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/configs/authOptions";
 import { db } from "@/lib/db";
 import { z } from "zod";
-import { PostValidator } from "@/components/Editor/postValidator";
+import { PostValidator } from "@/lib/validators/postValidator";
 
 export const POST = async (req: NextRequest) => {
   try {

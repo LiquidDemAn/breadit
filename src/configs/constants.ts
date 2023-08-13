@@ -20,6 +20,7 @@ export enum ApiEndpoints {
   LINK = "/api/link",
   CREATE_POST = "/api/subreddit/post/create",
   VOTE = "/api/subreddit/post/vote",
+  CREATE_COMMENT = "/api/subreddit/post/comment",
 }
 
 export const INFINITE_SCROLLING_PAGINATION_RESULTS = 2;

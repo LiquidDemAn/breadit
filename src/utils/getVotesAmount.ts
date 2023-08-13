@@ -1,10 +1,8 @@
-import { Post, User, Vote, VoteType } from "@prisma/client";
+import { CommentVote, Vote, VoteType } from "@prisma/client";
 
-export const getVotesAmount = (
-  post: (Post & { votes: Vote[]; author: User }) | null,
-) => {
+export const getVotesAmount = (votes: Vote[] | CommentVote[]) => {
   return (
-    post?.votes.reduce((acc, cur) => {
+    (votes as Vote[]).reduce((acc, cur) => {
       if (cur.type === VoteType.UP) {
         return acc + 1;
       }

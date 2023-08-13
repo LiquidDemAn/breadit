@@ -7,6 +7,8 @@ import PostVoteShell from "@/app/r/[slug]/post/[id]/components/PostVoteShell";
 import { db } from "@/lib/db";
 import { formatTimeToNow } from "@/lib/utils";
 import EditorOutput from "@/components/EditorOutput";
+import { Loader2 } from "lucide-react";
+import Comments from "@/app/r/[slug]/post/[id]/components/Comments";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -52,6 +54,15 @@ const Page = async ({ params }: Props) => {
           </h1>
 
           <EditorOutput content={post?.content || cachedPost.content} />
+
+          <Suspense
+            fallback={
+              <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
+            }
+          >
+            {/* @ts-expect-error Server Component */}
+            <Comments postId={post?.id || cachedPost.id} />
+          </Suspense>
         </div>
       </div>
     </div>

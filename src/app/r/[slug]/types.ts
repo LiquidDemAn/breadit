@@ -1,4 +1,4 @@
-import { UserSessionType } from "@/types/common";
+import { UserSessionType } from "@/utils/useUserSession";
 
 type Params = {
   slug: string;

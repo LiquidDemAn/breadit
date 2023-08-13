@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
-import { PostVoteValidator } from "@/lib/validators/voteValidation";
 import { getAuthSession } from "@/configs/authOptions";
 import { db } from "@/lib/db";
 import { getVotesAmount } from "@/utils/getVotesAmount";
 import { CachedPost } from "@/types/redis";
 import { redis } from "@/lib/redis";
 import { z } from "zod";
+import { PostVoteValidator } from "@/lib/validators/postValidator";
 
 const CACHE_AFTER_UP_VOTES = 1;
 
@@ -43,7 +43,7 @@ export const PATCH = async (req: NextRequest) => {
           where: { userId_postId: { postId, userId } },
         });
 
-        const votesAmount = getVotesAmount(post);
+        const votesAmount = getVotesAmount(post.votes);
 
         if (votesAmount >= CACHE_AFTER_UP_VOTES) {
           const cachePayload: CachedPost = {
@@ -67,7 +67,7 @@ export const PATCH = async (req: NextRequest) => {
         data: { type },
       });
 
-      const votesAmount = getVotesAmount(post);
+      const votesAmount = getVotesAmount(post.votes);
 
       if (votesAmount >= CACHE_AFTER_UP_VOTES) {
         const cachePayload: CachedPost = {
@@ -95,7 +95,7 @@ export const PATCH = async (req: NextRequest) => {
       });
     }
 
-    const votesAmount = getVotesAmount(post);
+    const votesAmount = getVotesAmount(post.votes);
 
     if (votesAmount >= CACHE_AFTER_UP_VOTES) {
       const cachePayload: CachedPost = {

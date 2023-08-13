@@ -1,6 +1,5 @@
 import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { PostVoteRequest } from "@/lib/validators/voteValidation";
 import { ApiEndpoints } from "@/configs/constants";
 import { VoteType } from "@prisma/client";
 import { useApiProps } from "@/components/PostVotesClient/types";
@@ -8,6 +7,7 @@ import { usePrevious } from "@mantine/hooks";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import { toast } from "@/hooks/useToast";
 import { useUserSession } from "@/utils/useUserSession";
+import { PostVoteRequest } from "@/lib/validators/postValidator";
 
 export const useApi = ({
   setVotesAmount,

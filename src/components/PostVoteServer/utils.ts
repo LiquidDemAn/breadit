@@ -9,7 +9,7 @@ export const getVoteData = async ({ getData }: GetVoteDataProps) => {
   if (getData) {
     const post = await getData();
 
-    const votesAmount = getVotesAmount(post);
+    const votesAmount = getVotesAmount(post?.votes || []);
     const currentVote = findVoteByUserId(session, post?.votes);
 
     return { post, currentVote, votesAmount };

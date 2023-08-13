@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { PostCreationRequest } from "@/components/Editor/postValidator";
+import { PostCreationRequest } from "@/lib/validators/postValidator";
 import axios from "axios";
 import { ApiEndpoints } from "@/configs/constants";
 import { useCustomToast } from "@/hooks/useCustomToast";

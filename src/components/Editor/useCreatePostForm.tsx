@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import {
   PostCreationRequest,
   PostValidator,
-} from "@/components/Editor/postValidator";
+} from "@/lib/validators/postValidator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreatPostFormProps } from "@/components/Editor/types";
 import { useApi } from "@/components/Editor/useApi";
@@ -41,7 +41,7 @@ export const useCreatePostForm = ({
         postValidationToast(value.message as string);
       }
     }
-  }, [errors]);
+  }, [errors, postValidationToast]);
 
   return {
     register,

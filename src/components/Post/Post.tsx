@@ -14,7 +14,7 @@ const Post: FC<Props> = ({ subredditName, post }) => {
   const session = useUserSession();
   const pRef = useRef<HTMLDivElement>(null);
 
-  const votesAmount = getVotesAmount(post);
+  const votesAmount = getVotesAmount(post.votes);
   const postLink = getPostLink(subredditName, post.id);
   const subredditLink = getSubredditLink(subredditName);
 
