@@ -9,7 +9,7 @@ export const CreateCommentValidator = z.object({
 
 export const CommentVoteValidator = z.object({
   commentId: z.string(),
-  voteType: z.enum([VoteType.UP, VoteType.DOWN]),
+  type: z.enum([VoteType.UP, VoteType.DOWN]),
 });
 
 export type CreateCommentRequest = z.infer<typeof CreateCommentValidator>;
