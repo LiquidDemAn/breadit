@@ -4,8 +4,10 @@ import { useIntersection } from "@mantine/hooks";
 import { Props } from "@/components/PostFeed/types";
 import Post from "@/components/Post";
 import { useApi } from "@/components/PostFeed/useApl";
+import { useUserSession } from "@/utils/useUserSession";
 
 const PostFeed: FC<Props> = ({ initialPosts, subredditName }) => {
+  const session = useUserSession();
   const [isLastPosts, setIsLastPosts] = useState<boolean>(false);
 
   const lastPostRef = useRef<HTMLElement>(null);
@@ -31,7 +33,11 @@ const PostFeed: FC<Props> = ({ initialPosts, subredditName }) => {
       {posts.map((post, index) => {
         return (
           <li key={post.id} {...(index === posts.length - 1 && { ref: ref })}>
-            <Post subredditName={post.subreddit.name} post={post} />
+            <Post
+              subredditName={post.subreddit.name}
+              post={post}
+              session={session}
+            />
           </li>
         );
       })}

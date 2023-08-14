@@ -8,18 +8,19 @@ import { getPostLink } from "@/utils/getPostLink";
 import { getSubredditLink } from "@/utils/getSubredditLink";
 import PostVoteClient from "@/components/PostVotesClient";
 import { getVotesAmount } from "@/utils/getVotesAmount";
-import { useUserSession } from "@/utils/useUserSession";
 import { getCurrentVote } from "@/utils/getCurrentVote";
 
-const Post: FC<Props> = ({ subredditName, post }) => {
-  const session = useUserSession();
+const Post: FC<Props> = ({ subredditName, post, session }) => {
   const pRef = useRef<HTMLDivElement>(null);
 
   const votesAmount = getVotesAmount(post.votes);
   const postLink = getPostLink(subredditName, post.id);
   const subredditLink = getSubredditLink(subredditName);
 
-  const commentsAmount = post.comments.length;
+  const commentsAmount = post.comments.filter(
+    (comment) => !comment.replyToId,
+  ).length;
+  // const commentsAmount = post.comments.length;
   const currentVote = getCurrentVote(post.votes, session);
 
   return (
