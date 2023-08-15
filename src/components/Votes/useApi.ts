@@ -7,8 +7,7 @@ import { usePrevious } from "@mantine/hooks";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import { toast } from "@/hooks/useToast";
 import { useUserSession } from "@/utils/useUserSession";
-import { PostVoteRequest } from "@/lib/validators/postValidator";
-import { CommentVoteRequest } from "@/lib/validators/commentValidation";
+import { VoteRequest } from "@/lib/validators/voteValidation";
 
 export const useApi = ({
   setVotesAmount,
@@ -21,7 +20,7 @@ export const useApi = ({
   const session = useUserSession();
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: async (payload: PostVoteRequest | CommentVoteRequest) => {
+    mutationFn: async (payload: VoteRequest) => {
       await axios.patch(
         componentType === ComponentTypeEnum.POST
           ? ApiEndpoints.POST_VOTE
@@ -30,24 +29,26 @@ export const useApi = ({
       );
     },
     onMutate: (vote) => {
-      const { type } = vote;
+      const { type, id } = vote;
 
       if (type === currentVote?.type) {
         setCurrentVote(undefined);
 
         if (type === VoteType.UP) {
           setVotesAmount((prev) => prev - 1);
-        }
-        if (type === VoteType.DOWN) {
+        } else {
           setVotesAmount((prev) => prev + 1);
         }
       } else {
-        setCurrentVote({ ...vote, userId: session?.user?.id! });
+        if (componentType === ComponentTypeEnum.POST) {
+          setCurrentVote({ type, postId: id, userId: session?.user?.id! });
+        } else {
+          setCurrentVote({ type, commentId: id, userId: session?.user?.id! });
+        }
 
         if (type === VoteType.UP) {
           setVotesAmount((prev) => prev + (currentVote ? 2 : 1));
-        }
-        if (type === VoteType.DOWN) {
+        } else {
           setVotesAmount((prev) => prev - (currentVote ? 2 : 1));
         }
       }

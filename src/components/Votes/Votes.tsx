@@ -23,21 +23,11 @@ const Votes: FC<Props> = ({
   });
 
   const voteUpHandle = () => {
-    if (componentType === ComponentTypeEnum.POST) {
-      mutate({ postId: id, type: VoteType.UP });
-    } else {
-      mutate({ commentId: id, type: VoteType.UP });
-    }
+    mutate({ id, type: VoteType.UP });
   };
 
   const voteDownHandle = () => {
-    if (componentType === ComponentTypeEnum.POST) {
-      mutate({ postId: id, type: VoteType.DOWN });
-    }
-
-    if (componentType === ComponentTypeEnum.COMMENT) {
-      mutate({ commentId: id, type: VoteType.DOWN });
-    }
+    mutate({ id, type: VoteType.DOWN });
   };
 
   useEffect(() => {

@@ -2,12 +2,12 @@ import { NextRequest } from "next/server";
 import { getAuthSession } from "@/configs/authOptions";
 import { db } from "@/lib/db";
 import { z } from "zod";
-import { CommentVoteValidator } from "@/lib/validators/commentValidation";
+import { VoteValidator } from "@/lib/validators/voteValidation";
 
 export const PATCH = async (req: NextRequest) => {
   try {
     const body = await req.json();
-    const { type, commentId } = CommentVoteValidator.parse(body);
+    const { type, id: commentId } = VoteValidator.parse(body);
     const session = await getAuthSession();
 
     if (!session?.user) {

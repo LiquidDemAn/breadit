@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { VoteType } from "@prisma/client";
 
 export const PostValidator = z.object({
   title: z
@@ -10,10 +9,4 @@ export const PostValidator = z.object({
   content: z.any(),
 });
 
-export const PostVoteValidator = z.object({
-  postId: z.string(),
-  type: z.enum([VoteType.UP, VoteType.DOWN]),
-});
-
 export type PostCreationRequest = z.infer<typeof PostValidator>;
-export type PostVoteRequest = z.infer<typeof PostVoteValidator>;

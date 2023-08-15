@@ -5,14 +5,14 @@ import { getVotesAmount } from "@/utils/getVotesAmount";
 import { CachedPost } from "@/types/redis";
 import { redis } from "@/lib/redis";
 import { z } from "zod";
-import { PostVoteValidator } from "@/lib/validators/postValidator";
+import { VoteValidator } from "@/lib/validators/voteValidation";
 
 const CACHE_AFTER_UP_VOTES = 1;
 
 export const PATCH = async (req: NextRequest) => {
   try {
     const body = await req.json();
-    const { type, postId } = PostVoteValidator.parse(body);
+    const { type, id: postId } = VoteValidator.parse(body);
     const session = await getAuthSession();
 
     if (!session?.user) {
