@@ -2,25 +2,32 @@ import axios, { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { ApiEndpoints } from "@/configs/constants";
 import { VoteType } from "@prisma/client";
-import { useApiProps } from "@/components/PostVotesClient/types";
+import { ComponentTypeEnum, useApiProps } from "./types";
 import { usePrevious } from "@mantine/hooks";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import { toast } from "@/hooks/useToast";
 import { useUserSession } from "@/utils/useUserSession";
 import { PostVoteRequest } from "@/lib/validators/postValidator";
+import { CommentVoteRequest } from "@/lib/validators/commentValidation";
 
 export const useApi = ({
   setVotesAmount,
   setCurrentVote,
   currentVote,
+  componentType,
 }: useApiProps) => {
   const prevVote = usePrevious(currentVote);
   const { loginToast } = useCustomToast();
   const session = useUserSession();
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: async (payload: PostVoteRequest) => {
-      await axios.patch(ApiEndpoints.POST_VOTE, payload);
+    mutationFn: async (payload: PostVoteRequest | CommentVoteRequest) => {
+      await axios.patch(
+        componentType === ComponentTypeEnum.POST
+          ? ApiEndpoints.POST_VOTE
+          : ApiEndpoints.COMMENT_VOTE,
+        payload,
+      );
     },
     onMutate: (vote) => {
       const { type } = vote;

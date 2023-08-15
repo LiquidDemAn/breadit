@@ -1,7 +1,8 @@
 import { Props } from "@/components/PostVoteServer/types";
 import { getVoteData } from "@/components/PostVoteServer/utils";
 import { notFound } from "next/navigation";
-import PostVoteClient from "@/components/PostVotesClient";
+import Votes from "@/components/Votes";
+import { ComponentTypeEnum } from "@/components/Votes/types";
 
 const PostVoteServer = async ({
   postId,
@@ -16,10 +17,11 @@ const PostVoteServer = async ({
   }
 
   return (
-    <PostVoteClient
-      postId={postId}
-      initialVotesAmount={votesAmount || initialVotesAmount}
+    <Votes
+      id={postId}
+      componentType={ComponentTypeEnum.POST}
       initialVote={currentVote || initialVote}
+      initialVotesAmount={votesAmount || initialVotesAmount}
     />
   );
 };

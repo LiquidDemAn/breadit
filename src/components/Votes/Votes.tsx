@@ -1,15 +1,16 @@
 "use client";
 import { FC, useEffect, useState } from "react";
-import { Props } from "@/components/PostVotesClient/types";
+import { ComponentTypeEnum, Props } from "./types";
+import { useApi } from "./useApi";
+import { VoteType } from "@prisma/client";
 import { Button } from "@/components/ui/Button";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { VoteType } from "@prisma/client";
-import { useApi } from "@/components/PostVotesClient/useApi";
 
-const PostVoteClient: FC<Props> = ({
-  postId,
+const Votes: FC<Props> = ({
+  id,
   initialVote,
+  componentType,
   initialVotesAmount,
 }) => {
   const [currentVote, setCurrentVote] = useState(initialVote);
@@ -18,14 +19,25 @@ const PostVoteClient: FC<Props> = ({
     currentVote,
     setVotesAmount,
     setCurrentVote,
+    componentType,
   });
 
   const voteUpHandle = () => {
-    mutate({ postId, type: VoteType.UP });
+    if (componentType === ComponentTypeEnum.POST) {
+      mutate({ postId: id, type: VoteType.UP });
+    } else {
+      mutate({ commentId: id, type: VoteType.UP });
+    }
   };
 
   const voteDownHandle = () => {
-    mutate({ postId, type: VoteType.DOWN });
+    if (componentType === ComponentTypeEnum.POST) {
+      mutate({ postId: id, type: VoteType.DOWN });
+    }
+
+    if (componentType === ComponentTypeEnum.COMMENT) {
+      mutate({ commentId: id, type: VoteType.DOWN });
+    }
   };
 
   useEffect(() => {
@@ -33,7 +45,12 @@ const PostVoteClient: FC<Props> = ({
   }, [initialVote]);
 
   return (
-    <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
+    <div
+      className={cn("flex gap-1.5", {
+        "1 flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0":
+          componentType === ComponentTypeEnum.POST,
+      })}
+    >
       <Button
         onClick={voteUpHandle}
         size="sm"
@@ -70,4 +87,4 @@ const PostVoteClient: FC<Props> = ({
   );
 };
 
-export default PostVoteClient;
+export default Votes;

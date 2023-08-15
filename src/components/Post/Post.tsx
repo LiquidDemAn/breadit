@@ -6,9 +6,10 @@ import { MessageSquare } from "lucide-react";
 import EditorOutput from "@/components/EditorOutput/EditorOutput";
 import { getPostLink } from "@/utils/getPostLink";
 import { getSubredditLink } from "@/utils/getSubredditLink";
-import PostVoteClient from "@/components/PostVotesClient";
 import { getVotesAmount } from "@/utils/getVotesAmount";
 import { getCurrentVote } from "@/utils/getCurrentVote";
+import Votes from "@/components/Votes";
+import { ComponentTypeEnum } from "@/components/Votes/types";
 
 const Post: FC<Props> = ({ subredditName, post, session }) => {
   const pRef = useRef<HTMLDivElement>(null);
@@ -20,16 +21,16 @@ const Post: FC<Props> = ({ subredditName, post, session }) => {
   const commentsAmount = post.comments.filter(
     (comment) => !comment.replyToId,
   ).length;
-  // const commentsAmount = post.comments.length;
   const currentVote = getCurrentVote(post.votes, session);
 
   return (
     <div className="rounded-md bg-white shadow">
       <div className="px-6 py-4 flex justify-between">
-        <PostVoteClient
-          postId={post.id}
+        <Votes
+          id={post.id}
           initialVote={currentVote}
           initialVotesAmount={votesAmount}
+          componentType={ComponentTypeEnum.POST}
         />
 
         <div className="w-0 flex-1">

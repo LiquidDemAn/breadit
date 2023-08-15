@@ -3,7 +3,6 @@ import { FC, useRef, useState } from "react";
 import UserAvatar from "@/components/UserAvatar";
 import { Props } from "@/app/r/[slug]/post/[id]/components/Comment/types";
 import { formatTimeToNow } from "@/lib/utils";
-import CommentVotes from "@/app/r/[slug]/post/[id]/components/CommentVotes";
 import { Button } from "@/components/ui/Button";
 import { MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -12,6 +11,8 @@ import { useUserSession } from "@/utils/useUserSession";
 import CreateComment from "@/app/r/[slug]/post/[id]/components/CreateComment";
 import { getVotesAmount } from "@/utils/getVotesAmount";
 import { getCurrentVote } from "@/utils/getCurrentVote";
+import Votes from "@/components/Votes";
+import { ComponentTypeEnum } from "@/components/Votes/types";
 
 const Comment: FC<Props> = ({ comment }) => {
   const router = useRouter();
@@ -50,10 +51,11 @@ const Comment: FC<Props> = ({ comment }) => {
       </div>
       <p className="text-sm text-zinc-900 mt-2">{text}</p>
       <div className="flex gap-2 items-center">
-        <CommentVotes
-          commentId={id}
-          initialVotesAmount={votesAmount || 0}
+        <Votes
+          id={id}
           initialVote={currentVote}
+          initialVotesAmount={votesAmount || 0}
+          componentType={ComponentTypeEnum.COMMENT}
         />
 
         {!comment.replyToId && (
