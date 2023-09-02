@@ -5,6 +5,9 @@ import { PathsEnum } from "@/configs/constants";
 import PostFeed from "@/components/PostFeed";
 import { getInitialPosts } from "@/app/utils";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default async function Home() {
   const posts = await getInitialPosts();
 
