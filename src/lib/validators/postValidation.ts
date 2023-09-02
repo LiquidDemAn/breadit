@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const PostValidator = z.object({
+export const PostValidation = z.object({
   title: z
     .string()
     .min(3, { message: "Title must be longer then 3 characters!" })
@@ -9,4 +9,4 @@ export const PostValidator = z.object({
   content: z.any(),
 });
 
-export type PostCreationRequest = z.infer<typeof PostValidator>;
+export type PostCreationRequest = z.infer<typeof PostValidation>;

@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import {
   PostCreationRequest,
-  PostValidator,
-} from "@/lib/validators/postValidator";
+  PostValidation,
+} from "@/lib/validators/postValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreatPostFormProps } from "@/components/Editor/types";
 import { useApi } from "@/components/Editor/useApi";
@@ -21,7 +21,7 @@ export const useCreatePostForm = ({
     handleSubmit,
     formState: { errors },
   } = useForm<PostCreationRequest>({
-    resolver: zodResolver(PostValidator),
+    resolver: zodResolver(PostValidation),
     defaultValues: {
       subredditId,
       title: "",

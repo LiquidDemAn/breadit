@@ -24,6 +24,9 @@ export enum ApiEndpoints {
   CREATE_COMMENT = "/api/subreddit/post/comment",
   COMMENT_VOTE = "/api/subreddit/post/comment/vote",
   SEARCH_COMMUNITIES = "/api/search?q",
+  USERNAME = "/api/username",
 }
 
 export const INFINITE_SCROLLING_PAGINATION_RESULTS = 2;
+
+export const NAME_REGEX = /^[a-zA-Z0-9_]+$/;

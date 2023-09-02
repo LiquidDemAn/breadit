@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/configs/authOptions";
-import { SubredditSubscriptionValidator } from "@/lib/validators/subreddit";
+import { SubredditSubscriptionValidator } from "@/lib/validators/subredditValidation";
 import { db } from "@/lib/db";
 import { z } from "zod";
 

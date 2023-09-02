@@ -1,4 +1,4 @@
-import { toast, useToast } from "@/hooks/useToast";
+import { useToast } from "@/hooks/useToast";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/Button";
 import { PathsEnum } from "@/configs/constants";
@@ -99,6 +99,28 @@ export const useCustomToast = () => {
     });
   };
 
+  const userNameAlreadyTakenToast = () => {
+    toast({
+      title: "Username already taken.",
+      description: "Please choose a different username.",
+      variant: "destructive",
+    });
+  };
+
+  const unknownUsernameErrorToast = () => {
+    toast({
+      title: "There was an error",
+      description: "Could not change username",
+      variant: "destructive",
+    });
+  };
+
+  const successUserNameChangeToast = () => {
+    toast({
+      description: "Your username has been updated.",
+    });
+  };
+
   return {
     loginToast,
     signInErrorToast,
@@ -111,5 +133,8 @@ export const useCustomToast = () => {
     postValidationToast,
     creatPostErrorToast,
     successCretePostToast,
+    userNameAlreadyTakenToast,
+    unknownUsernameErrorToast,
+    successUserNameChangeToast,
   };
 };

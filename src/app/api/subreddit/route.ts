@@ -1,5 +1,5 @@
 import { getAuthSession } from "@/configs/authOptions";
-import { SubredditValidator } from "@/lib/validators/subreddit";
+import { SubredditValidator } from "@/lib/validators/subredditValidation";
 import { db } from "@/lib/db";
 import { z } from "zod";
 

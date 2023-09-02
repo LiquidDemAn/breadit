@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { ApiEndpoints } from "@/configs/constants";
-import { CreateSubredditType } from "@/lib/validators/subreddit";
+import { CreateSubredditType } from "@/lib/validators/subredditValidation";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import { useRouter } from "next/navigation";
 

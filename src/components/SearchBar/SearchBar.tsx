@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   Command,
   CommandEmpty,
@@ -13,9 +13,11 @@ import { useRouter } from "next/navigation";
 import { PathsEnum } from "@/configs/constants";
 import { Users } from "lucide-react";
 import debounce from "lodash/debounce";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 const SearchBar = () => {
   const router = useRouter();
+  const commandRef = useRef<HTMLDivElement>(null);
 
   const [value, setValue] = useState("");
   const [isSelected, setIsSelected] = useState(false);
@@ -46,8 +48,16 @@ const SearchBar = () => {
     router.refresh();
     router.push(`${PathsEnum.SUBREDDIT}/${item}`);
   };
+
+  useOnClickOutside(commandRef, () => {
+    setValue("");
+  });
+
   return (
-    <Command className="relative rounded-lg border max-w-lg z-50 overflow-visible ">
+    <Command
+      ref={commandRef}
+      className="relative rounded-lg border max-w-lg z-50 overflow-visible "
+    >
       <CommandInput
         value={value}
         isLoading={false}

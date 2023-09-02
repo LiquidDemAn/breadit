@@ -46,7 +46,7 @@ const Post: FC<Props> = ({ subredditName, post, session }) => {
                 <span className="px-1">-</span>
               </>
             ) : null}
-            <span>Posted by u/{post.author.name}</span>
+            <span>Posted by u/{post.author.username}</span>
             <span className="inline-block ml-1">
               {formatTimeToNow(new Date(post.createdAt))}
             </span>

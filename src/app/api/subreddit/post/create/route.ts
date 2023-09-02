@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/configs/authOptions";
 import { db } from "@/lib/db";
 import { z } from "zod";
-import { PostValidator } from "@/lib/validators/postValidator";
+import { PostValidation } from "@/lib/validators/postValidation";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
 
     const body = await req.json();
 
-    const { subredditId, title, content } = PostValidator.parse(body);
+    const { subredditId, title, content } = PostValidation.parse(body);
 
     const subscription = await db.subscription.findFirst({
       where: {
