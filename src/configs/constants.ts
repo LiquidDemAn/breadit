@@ -2,6 +2,7 @@
 
 export enum QueryKeys {
   INFINITY_QUERY = "INFINITY_QUERY",
+  SEARCH_QUERY = "SEARCH_QUERY",
 }
 
 export enum PathsEnum {
@@ -22,6 +23,7 @@ export enum ApiEndpoints {
   POST_VOTE = "/api/subreddit/post/vote",
   CREATE_COMMENT = "/api/subreddit/post/comment",
   COMMENT_VOTE = "/api/subreddit/post/comment/vote",
+  SEARCH_COMMUNITIES = "/api/search?q",
 }
 
 export const INFINITE_SCROLLING_PAGINATION_RESULTS = 2;

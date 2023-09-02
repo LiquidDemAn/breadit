@@ -5,6 +5,7 @@ import { PathsEnum } from "@/configs/constants";
 import { buttonVariants } from "@/components/ui/Button";
 import { getAuthSession } from "@/configs/authOptions";
 import UserNavigation from "@/components/UserNavigation";
+import SearchBar from "@/components/SearchBar";
 
 const Navbar = async () => {
   const session = await getAuthSession();
@@ -18,6 +19,8 @@ const Navbar = async () => {
             Breadit
           </h1>
         </Link>
+
+        <SearchBar />
 
         {session?.user ? (
           <UserNavigation user={session.user} />
