@@ -91,7 +91,7 @@ export const useInitializeEditor = (
         ref.current = undefined;
       };
     }
-  }, [isMounted, initializeEditor]);
+  }, [isMounted, initializeEditor, titleRef]);
 
   return {
     editorRef: ref,
