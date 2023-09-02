@@ -12,8 +12,8 @@ import { useApi } from "@/components/SearchBar/useApi";
 import { useRouter } from "next/navigation";
 import { PathsEnum } from "@/configs/constants";
 import { Users } from "lucide-react";
-import debounce from "lodash/debounce";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+import { debounce } from "lodash";
 
 const SearchBar = () => {
   const router = useRouter();
