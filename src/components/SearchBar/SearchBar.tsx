@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { PathsEnum } from "@/configs/constants";
 import { Users } from "lucide-react";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-import { debounce } from "lodash";
+import debounce from "lodash.debounce";
 
 const SearchBar = () => {
   const router = useRouter();
